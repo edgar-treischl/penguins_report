@@ -1,0 +1,65 @@
+---
+title: "Results for `r params$continent`"
+author: "Edgar Treischl"
+date: 'Last update: `r Sys.Date()`'
+output:
+  pdf_document: default
+params:
+  data: gapminder
+  continent: Europe
+
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(DataExplorer)
+library(gapminder)
+library(tidyverse)
+#df <- get(params$data)
+```
+
+
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. 
+
+
+
+
+What is the average life expectancy for: `r params$continent`
+
+```{r}
+gapminder %>% 
+  filter(continent == params$continent,
+          year == max(year)) %>% 
+  summarise(lifeExp = mean(lifeExp))
+
+```
+
+
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat sed diam voluptua. 
+
+```{r}
+gapminder %>% 
+  filter(continent == params$continent) %>% 
+  ggplot(aes(x=gdpPercap, y=lifeExp)) +
+  geom_point() + 
+  geom_smooth()
+
+```
+
+
+At vero eos et accusam et justo duo dolores et ea rebum.
+
+```{r}
+gapminder %>% 
+  filter (continent == params$continent) %>% 
+  ggplot(aes(x=lifeExp)) +
+  geom_density()+
+  facet_wrap(year ~ ., nrow=2)+
+  ggtitle(params$continent)
+
+```
+
+
+
